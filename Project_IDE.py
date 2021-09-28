@@ -1,6 +1,4 @@
-# from os import terminal_size    
-# from tkinter import font, ttk
-from tkinter import *
+from tkinter import *                
 from tkinter.filedialog import asksaveasfile, askopenfilenames,askopenfilename, asksaveasfilename ,asksaveasfile  
 from tkinter.scrolledtext import ScrolledText
 import tkinter.messagebox as tmsg
@@ -53,7 +51,7 @@ def Open_File(event=None):
     OpenObj = OpenFiles()
     fileTrace = OpenObj.file_path
 
-root.bind("<Control-o>",Open_File)
+root.bind("<Control-o>",Open_File)             # Bind mouse controls to commands
 
 
 
@@ -71,17 +69,17 @@ def Save(event=None):
         code = editor.get(1.0, END)
         file.write(code)
         tmsg.showinfo("Saved","Python File Saved Succesfully!")    
-root.bind("<Control-s>",Save)
-
+root.bind("<Control-s>",Save)                            # Bind mouse controls to commands
+       
 def Save_As(event=None):
     global code, file_path
-    #code = editor.get(1.0, END)
+    code = editor.get(1.0, END)
     save_path = asksaveasfilename(defaultextension = ".py", filetypes=[("Python File", "*.py")])
     file_path = save_path
     with open(save_path, "w") as file:
         code = editor.get(1.0, END)
         file.write(code) 
-root.bind("<Control-S>", Save_As)
+root.bind("<Control-S>", Save_As)                          # Bind mouse controls to commands
 
 def Close(event=None):
 
@@ -92,12 +90,12 @@ def Close(event=None):
         exit()
 
     elif User_Reply == "no" :
-        tmsg.showinfo(":)","Let's continue with your programming")
+        tmsg.showinfo(":)","Let's continue with your programming")   # Notification
 
-root.bind("<Control-q>",Close)
+root.bind("<Control-q>",Close)                                 # Bind mouse controls to commands
 
 def Cut():
-    editor.event_generate(("<<Cut>>"))
+    editor.event_generate(("<<Cut>>"))                         
 
 def Copy():
     editor.event_generate(("<<Copy>>"))
@@ -124,27 +122,37 @@ def Run(event=None):
     exec(code)
 
     cmd = f"python {file_path}"
+
+    # Calling Command prompt to Initialize python interpreter
+
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
-    oupt , er = process.communicate()
+    oupt , er = process.communicate()    # Insert & Fetch user written code in created shell
 
     output.delete(1.0, END)
-    output.insert(1.0, oupt)
+    output.insert(1.0, oupt)              
     output.insert(1.0, er)
 
 root.bind("<F5>", Run)
 
+# Configure Light Theme
 
-def LT():
+def LT():                         
     editor.config(bg="white",fg="black")
     output.config(bg="white",fg="black")
     Sym.config(fg="Black",bg="white")
     f.config(bg="white")
+    
+    
+# Configure Dark Theme   
 def DT():
     editor.config(bg="black",fg="orange")
     output.config(bg="black",fg="white")
     Sym.config(fg="Orange",bg="black")
     f.config(bg="black")
+
+    
+# Initialise Code Colours   
 
 def red():
     editor.config(fg="red")
@@ -163,7 +171,7 @@ def yellow():
 def magenta():
     editor.config(fg="magenta")
 
-
+# Initialise Output Colours 
 
 def red1():
     output.config(fg="red")
@@ -181,12 +189,14 @@ def yellow1():
     output.config(fg="yellow")
 def magenta1():
     output.config(fg="magenta")
+    
+# Help/Support     
 
 def Help():
     tmsg.showinfo("Help","Python IDE provides you platform to enhance your programing skills\n\nPlease visit https://www.programiz.com/python-programming")
 
 
-
+# Setting up Menu snd SubMenus 
 
 M = Menu(root ,tearoff=0)
 m1 = Menu(M , tearoff=0,font=("Helvetica",9))
@@ -246,27 +256,30 @@ m4.add_cascade(label="Output Colour",menu=my)
 
 
 M.add_cascade(label="View",menu=m4)
-root.configure(menu=M)
+root.configure(menu=M)                         # Pack menus in Main Menu
 
 m5 = Menu(M,tearoff=0,font=("Helvetica",10))
 m5.add_cascade(label="Help",command=Help)
 M.add_cascade(label="Help",menu=m5)
 root.configure(menu=M)
 
+# Scroll bar
 
 editor = ScrolledText(root, height=18,wrap=None,bg="black",fg="Orange",font="Srif 17 bold")
 editor.pack(fill=BOTH)
 editor.focus()
 
+# Output frame setup
 
 f = Frame(root,width=200,height=4,bg="black")
 f.pack(side=LEFT,fill=BOTH)
 Sym = Label(f,text=">>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>",font="srif 20 bold",bg="black",fg="orange")
 Sym.pack(anchor="w")
 
+# Scroll bar
 
 output = ScrolledText(root,height=13,fg="white",bg="black",font="srif 16 bold")
 output.pack(fill=BOTH)
 output.focus()
 
-root.mainloop()
+root.mainloop()          
