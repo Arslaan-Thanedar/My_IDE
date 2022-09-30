@@ -5,9 +5,6 @@ import tkinter.messagebox as tmsg
 from typing import Any
 from PIL import Image,ImageTk
 import subprocess
-import csv
-
-
 
 # Inatializing tkinter window setup
 
