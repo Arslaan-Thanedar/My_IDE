@@ -5,6 +5,7 @@ import tkinter.messagebox as tmsg
 from typing import Any
 from PIL import Image,ImageTk
 import subprocess
+import csv
 
 
 
@@ -14,7 +15,7 @@ root = Tk()
 root.title("Python IDE")      
 root.configure(bg="Black")
 root.geometry("1300x800")
-root.minsize(700,600)
+root.minsize(700,601)
 root.maxsize(1520,770)
 
 
